@@ -9,13 +9,6 @@ https://docs.google.com/spreadsheets/d/15BCDaNXiiUL2QYLtYsj7KyzDzPyyZgpd53_zFzzA
 - "Score.csv" current output from Filter_Doc.ipnb (to do = extract more feature). <br />
 - "Twitter+API+Scraping.ipynb" containts script for pulling data from twitter.
 
-### Current logic in Filter_Doc.ipnb
-For each news header: <br />
-- remove stopword <br />
-- extract all the word that match the words in Mcdonald dictionary <br />
-- score = word1_score + word2_score +... (look up from the dictionary) <br />
-- clean up date <br />
-
 3) Tutorial on to use scrape data. <br />
 https://docs.google.com/document/d/1MFxfclc5q66OU8cB2NSayste8ZyRmRUHeD_Fo16PAJU/edit <br />
 
@@ -23,3 +16,9 @@ https://docs.google.com/document/d/1MFxfclc5q66OU8cB2NSayste8ZyRmRUHeD_Fo16PAJU/
 - Fit the model using sentiment score and compare the result to the model without this feature. <br />
 - Feature to use: Trend/Seasonality/Sentiment Score <br />
 
+### Current logic in Filter_Doc.ipnb
+For each news header: <br />
+- remove stopword <br />
+- extract all the word that match the words in Mcdonald dictionary <br />
+- score = word1_score + word2_score +... (look up from the dictionary) <br />
+- clean up date <br />
