@@ -19,6 +19,6 @@ https://docs.google.com/document/d/1MFxfclc5q66OU8cB2NSayste8ZyRmRUHeD_Fo16PAJU/
 ### Current logic in Filter_Doc.ipnb
 For each news header: <br />
 - remove stopword <br />
-- extract all the word that match the words in Mcdonald dictionary <br />
+- extract all the word that match the words in Mcdonald's dictionary <br />
 - score = word1_score + word2_score +... (look up from the dictionary) <br />
 - clean up date <br />
