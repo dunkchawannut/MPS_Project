@@ -6,8 +6,8 @@
 #### "Score.csv" current output from Filter_Doc.ipnb (to do = extract more feature)
 
 ### Current logic in Filter_Doc.ipnb
-For each news header:
-  remove stopword
-  extract all the word that's in Mcdonald dictionary
-  score = word1_score + word2_score +... (look up from the dictionary)
+For each news header: \n
+  remove stopword \n
+  extract all the word that's in Mcdonald dictionary \n
+  score = word1_score + word2_score +... (look up from the dictionary) \n
   clean up date 
