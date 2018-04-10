@@ -8,11 +8,11 @@ https://docs.google.com/spreadsheets/d/15BCDaNXiiUL2QYLtYsj7KyzDzPyyZgpd53_zFzzA
 - **Python notebook Filter_Doc.ipnb"** contains the script for cleaning data. <br />
 - **"Score.csv"** current output from Filter_Doc.ipnb (to do = extract more feature). <br />
 - **"Twitter+API+Scraping.ipynb"** containts script for pulling data from twitter.
-- **"train.csv"** contains the final data ready for modelling. Note that this is only for 2012.
+- **"train.csv"** contains the final data ready for modelling. Note that this is only for 2012 (In the process of extracting more).
 - **"sectors.csv"** is the raw data from client (last 10 years financial index by sector)
 - **"Feature_Extraction.ipynb"** the script for joining all the data.
 
-3) Tutorial on to use scrape data. <br />
+3) Tutorial on the tool we use to scrape the data. <br />
 https://docs.google.com/document/d/1MFxfclc5q66OU8cB2NSayste8ZyRmRUHeD_Fo16PAJU/edit <br />
 
 4) To do list <br />
@@ -21,7 +21,7 @@ https://docs.google.com/document/d/1MFxfclc5q66OU8cB2NSayste8ZyRmRUHeD_Fo16PAJU/
 
 ### Current logic in Filter_Doc.ipnb
 For each news header: <br />
-- remove stopword <br />
+- remove stopword (The Macdonald dictionary contains stopword) <br />
 - extract all the word that match the words in Mcdonald's dictionary <br />
 - score = word1_score + word2_score +... (look up from the dictionary) <br />
 - clean up date <br />
