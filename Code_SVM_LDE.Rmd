@@ -1,0 +1,75 @@
+---
+title: "Untitled"
+author: "Zihan Zhang ZZ527"
+output: word_document
+---
+
+```{r}
+data=read.csv("C:\\Users\\win10\\Desktop\\STSCI5999\\WSJ2013-2018train\\standardized.csv")
+sector=read.csv("C:\\Users\\win10\\Desktop\\STSCI5999\\WSJ2013-2018train\\trend.csv")
+new=merge(data, sector, by=c("year","week"))
+new=new[order(new$X.x),]
+new=new[,-c(3,15)]
+write.csv(new, file = "data.csv")
+```
+
+```{r}
+train_data=new[c(1:209),]
+test_data=new[c(210:314),]
+```
+
+#SVM
+```{r}
+#radial
+library(e1071)
+library(caret)
+svm.grid =expand.grid(C = 2^(1:3), sigma = seq(0.1, 1, length = 10))
+p=9
+t.ctrl = trainControl(method = "repeatedcv", number = 5, repeats = 5)
+rf.grid =expand.grid(mtry = 1:p)
+svm.train =train(as.factor(XRT.US) ~ year+week+Uncertainty_final+Litigious_final+ Modal_final +Interesting_final+Superfluous_final+Negative_final+ Positive_final + Irr_Verb_final +  Constraining_final+Harvard_IV_final, data = train_data, method = "svmRadial",trControl = t.ctrl, tuneGrid = svm.grid,preProcess = c("center", "scale"))
+
+plot(svm.train)
+svm.train$bestTune
+
+pred=predict(svm.train,newdata=test_data)
+mean(test_data$XRT.US!=pred)
+#linear
+svmfit=svm(as.factor(XLE.US) ~Uncertainty_final+Litigious_final+ Modal_final +Interesting_final+Superfluous_final+Negative_final+ Positive_final + Irr_Verb_final +  Constraining_final+Harvard_IV_final, data=train_data,kernel ="linear",cost =10 ,scale =FALSE)
+ypred = predict(svmfit , test_data )
+mean(test_data$XLE.US!=ypred)
+
+#poly not good
+svmfit=svm(as.factor(XLE.US) ~Uncertainty_final+Litigious_final+ Modal_final +Interesting_final+Superfluous_final+Negative_final+ Positive_final + Irr_Verb_final +  Constraining_final+Harvard_IV_final, data=train_data,kernel ="sigmoid",cost =10 ,scale =FALSE)#poly  
+ypred = predict(svmfit , test_data )
+mean(test_data$XLE.US!=ypred)
+ #Uncertainty_final+Litigious_final+ Modal_final #+Interesting_final+Superfluous_final+Negative_final+ Positive_final + Irr_Verb_final #+  Constraining_final+Harvard_IV_final
+```
+
+```{r}
+#knn
+new$XRT.US=as.factor(new$XRT.US)
+train.X=new[c(1:209),c(1:11,13)]
+test.X=new[c(210:314),c(1:11,13)]
+train.Y=new[c(1:209),14]
+test.Y=new[c(210:314),14]
+library(class)
+k=seq(1,50,1)
+for (k in c(1:50))
+{
+  knn.pred=knn(train.X,test.X,train.Y,k=8)
+  print(mean(test.Y!= knn.pred))
+}
+
+```
+
+```{r}
+#lda
+train_data=new[c(1:209),]
+test_data=new[c(210:314),]
+library(MASS)
+lda.fit =lda(as.factor(XLE.US)~year+week+score, data = train_data)
+pred.lda=predict(lda.fit,test_data)
+mean(test_data$XLE.US!=pred.lda$class)
+```
+
