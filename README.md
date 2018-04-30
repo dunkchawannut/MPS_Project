@@ -1,3 +1,8 @@
+### For Client.
+The main script is in **Multiclass_Model.R**
+GBM from H2O is used for multi-classification and NB is used as a base line comparison.
+Prophet model (Fully Bayesian Time Serie Model developed by Facebook) is used for second stage prediction.
+
 ### MPS_Project
 1) Research on related papers. <br />
 https://docs.google.com/spreadsheets/d/15BCDaNXiiUL2QYLtYsj7KyzDzPyyZgpd53_zFzzA-E0/edit#gid=0 <br />
