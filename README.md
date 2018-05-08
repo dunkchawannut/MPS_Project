@@ -1,4 +1,4 @@
-### Report.
+### Report
 Report can be viewed here.
 https://docs.google.com/document/d/1MFxfclc5q66OU8cB2NSayste8ZyRmRUHeD_Fo16PAJU/edit
 
