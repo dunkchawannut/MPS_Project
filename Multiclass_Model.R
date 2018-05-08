@@ -52,6 +52,7 @@ names(agg_data_2)[11:21] <- c( "Constraining_final"
 #Loop through each sector
 market <- names(agg_data_2)[2:10]
 
+
 #This is the syntax of non standard evaluation (SE)
 #See here 
 #https://datascience.blog.wzb.eu/2016/09/27/dynamic-columnvariable-names-with-dplyr-using-standard-evaluation-functions/
@@ -69,11 +70,12 @@ main <- list('mean(Constraining_final)' , 'mean(Harvard_IV_final)'
 acc_store <- matrix(nrow = length(market) , ncol = 4)
 raw_table_acc <- list(data.frame("gbm" , "flag" , "nb"))
 store_prediction <- data.frame()
+varImpo <- data.frame()
 
 ###--------------- LOOP THROUGH EACH MARKET ----------------------
 ###--------------- LOOP THROUGH EACH MARKET ----------------------
 
-pdf("plots_time_series_all3.pdf")
+#pdf("plots_time_series_all3.pdf")
 for(i in 1:length(market)){
   #This column will be dynamic
   start_time <- Sys.time()
@@ -170,10 +172,10 @@ for(i in 1:length(market)){
                       sample_rate = c(0.5  , 0.9 , 1),
                       col_sample_rate = c(0.5,   0.9 , 1))
   
-  search_criteria <- list(strategy = "RandomDiscrete", max_runtime_secs = 150 , seed = 1)
+  search_criteria <- list(strategy = "RandomDiscrete", max_runtime_secs = 20 , seed = 1)
 
   # Train and validate a cartesian grid of GBMs
-  gbm_grid1 <- h2o.grid("gbm", x = predictors, y = response,
+  gbm_grid1 <- h2o.grid("gbm", grid_id = "gbm_grid1", x = predictors, y = response,
                         training_frame = train,
                         validation_frame = valid,
                         #ntrees = 2000,
@@ -190,6 +192,9 @@ for(i in 1:length(market)){
 
   # Grab the top GBM model, chosen by validation AUC
   best_gbm1 <- h2o.getModel(gbm_gridperf1@model_ids[[1]])
+  
+  varImpo <- 
+    rbind(varImpo ,cbind(as.data.frame(best_gbm1@model$variable_importances)[1:5,] , market[i]))
   
   print("GBM with grid search")
   print(h2o.confusionMatrix(h2o.performance(best_gbm1, newdata = test)))
@@ -284,6 +289,7 @@ for(i in 1:length(market)){
                                 by = c("year" = "year" ,"week" = "week"))
   temp <- select(temp , ds.x , yhat,yhat_lower,
                              yhat_upper , market , year , week ,y)
+  #temp2 <- select(time_series_model_train , ds , )
   store_prediction <- rbind(store_prediction , temp)
   
   
